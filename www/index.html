@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    ons.ready(function () {
+      console.log("Onsen UI is ready!");
+    });
+
+    if (ons.platform.isIPhoneX()) {
+      document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
+      document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
+    }
+    function takeVideo() {
+      // capture callback
+      var captureSuccess = function (mediaFiles) {
+        var i, path, len;
+        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+          path = mediaFiles[i].fullPath;
+          // do something interesting with the file
+          document.getElementById("VIDEO").remove();
+          var x = document.createElement("VIDEO");
+
+          if (x.canPlayType("video/mp4")) {
+            x.setAttribute("src", path);
+          } else {
+            x.setAttribute("src", "https://video.twimg.com/ext_tw_video/1244003140183060485/pu/vid/1280x720/nyR7xJnXM6sBC_6L.mp4");
+          }
+
+          x.setAttribute("width", "280");
+          x.setAttribute("height", "180");
+          x.setAttribute("controls", "controls");
+          x.setAttribute("autoplay","autoplay");
+          x.setAttribute("id","VIDEO");
+          document.getElementById('wea').appendChild(x);
+        }
+      };
+      // capture error callback
+      var captureError = function (error) {
+        navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+      };
+
+      // start video capture
+      navigator.device.capture.captureVideo(captureSuccess, captureError, { limit: 1 });
+
+    }
+    function snapPicture() {
+      
+      navigator.camera.getPicture(successCallback, FailCallback, { destinationType: Camera.DestinationType.DATA_URL });
+
+      //Success Callback
+      function successCallback(imageData) {
+        //Display image
+        document.getElementById("img").remove();
+        var x = document.createElement("img");
+        x.setAttribute("width","150");
+        x.setAttribute("height","150");
+        x.setAttribute("id","img");
+        x.setAttribute("src","data:image/jpeg;base64, " + imageData);
+        document.getElementById('pic').appendChild(x);
+        //var image = document.getElementById('img');
+        //image.src = "data:image/jpeg;base64, " + imageData;
+      }
+      //Error CallBack
+      function FailCallback(message) {
+        alert('Error!!!: ' + message);
+      }
+    }
+  </script>
+</head>
+
+<body style="background-color: deepskyblue;text-align: center;">
+  <div class="toolbar toolbar--material">
+    <div class="toolbar__left toolbar--material__left">
+      <span class="toolbar-button toolbar-button--material">
+        <i class="zmdi zmdi-favorite"></i>
+      </span>
+    </div>
+    <div style="text-align: center;" class="toolbar__center toolbar--material__center">
+      Image & Video Capture
+    </div>
+    <div class="toolbar__right toolbar--material__right">
+
+      <span class="toolbar-button toolbar-button--material">
+        <i class="zmdi zmdi-favorite"></i>
+      </span>
+
+    </div>
+  </div>
+  <div style="width: 100%;margin-top: 10%;height: 100%;">
+    <div class="card"
+      style="height: 35%;background-color: lightcyan;width: 80%;margin: auto;border: 1px solid blanchedalmond;padding: 10px;">
+      <div id=pic style="text-align: center;">
+        <button class="button button--material" onclick="snapPicture()">Take Photo</button>
+        <br><br>
+        <div id="img"></div>
+      </div>
+    </div>
+    <br><br>
+    <div class="card"
+      style="height: 35%;background-color: lightcyan;width: 80%;margin: auto;border: 1px solid blanchedalmond;padding: 10px;">
+      <div id="wea" style="text-align: center;">
+        <button style="margin-bottom: 10%;" class="button button--material" onclick="takeVideo()">Capture Video</button>
+        <div id="VIDEO"></div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="tabbar">
+    <label class="tabbar__item">
+      <input type="radio" name="tabbar-c" checked="checked">
+      <button class="tabbar__button">
+        <div class="tabbar__label">Camera</div>
+      </button>
+    </label>
+  
+    <label class="tabbar__item">
+      <input type="radio" name="tabbar-c">
+      <button class="tabbar__button">
+        <div class="tabbar__label">Map</div>
+      </button>
+    </label>
+  
+    <label class="tabbar__item">
+      <input type="radio" name="tabbar-c">
+      <button class="tabbar__button">
+        <div class="tabbar__label">API</div>
+      </button>
+    </label>
+  </div>
+</body>
+
+</html>
