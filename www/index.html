@@ -3,10 +3,9 @@
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' http://localhost:5000 'unsafe-inline' 'unsafe-eval';media-src 'self' http://localhost:5000 'unsafe-inline' unsafe-eval;">
   <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <script src="components/loader.js"></script>
   <script src="lib/onsenui/js/onsenui.min.js"></script>
 
@@ -24,9 +23,43 @@
       document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
       document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
     }
-    function takeVideo() {
-      // capture callback
-      var captureSuccess = function (mediaFiles) {
+    function gallery(){
+      navigator.camera.getPicture(successCallbackG,FailCallback,{
+        quality:50,destinationType:Camera.DestinationType.FILE_URI,
+        sourceType:Camera.PictureSourceType.PHOTOLIBRARY
+      });
+    }
+    function galleryV(){
+      
+      navigator.camera.getPicture(captureSuccessV,FailCallback,{
+        quality:50,destinationType:Camera.DestinationType.FILE_URI,
+        sourceType:Camera.PictureSourceType.PHOTOLIBRARY,
+        mediaType:Camera.MediaType.VIDEO
+      });
+    }
+    function captureSuccessV(mediaFiles) {
+      console.log('video',mediaFiles)
+        var i, path, len;
+          path = mediaFiles;
+          // do something interesting with the file
+          document.getElementById("VIDEO").remove();
+          var x = document.createElement("VIDEO");
+
+          if (x.canPlayType("video/mp4")) {
+            x.setAttribute("src", path);
+          } else {
+            x.setAttribute("src", "https://video.twimg.com/ext_tw_video/1244003140183060485/pu/vid/1280x720/nyR7xJnXM6sBC_6L.mp4");
+          }
+
+          x.setAttribute("width", "280");
+          x.setAttribute("height", "180");
+          x.setAttribute("controls", "controls");
+          x.setAttribute("autoplay","autoplay");
+          x.setAttribute("id","VIDEO");
+          document.getElementById('wea').appendChild(x);
+  
+      };
+    function captureSuccess(mediaFiles) {
         var i, path, len;
         for (i = 0, len = mediaFiles.length; i < len; i += 1) {
           path = mediaFiles[i].fullPath;
@@ -48,22 +81,21 @@
           document.getElementById('wea').appendChild(x);
         }
       };
+    function takeVideo() {
       // capture error callback
-      var captureError = function (error) {
-        navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
-      };
 
       // start video capture
-      navigator.device.capture.captureVideo(captureSuccess, captureError, { limit: 1 });
+      navigator.device.capture.captureVideo(captureSuccess, FailCallback, { limit: 1 });
 
     }
     function snapPicture() {
       
       navigator.camera.getPicture(successCallback, FailCallback, { destinationType: Camera.DestinationType.DATA_URL });
 
-      //Success Callback
-      function successCallback(imageData) {
-        //Display image
+    }
+    //Success Callback
+    function successCallback(imageData) {
+      //Display image
         document.getElementById("img").remove();
         var x = document.createElement("img");
         x.setAttribute("width","150");
@@ -74,11 +106,23 @@
         //var image = document.getElementById('img');
         //image.src = "data:image/jpeg;base64, " + imageData;
       }
+    function successCallbackG(imageURI) {
+      var imageData =  imageURI  
+      //Display image
+        document.getElementById("img").remove();
+        var x = document.createElement("img");
+        x.setAttribute("width","150");
+        x.setAttribute("height","150");
+        x.setAttribute("id","img");
+        x.setAttribute("src",imageData);
+        document.getElementById('pic').appendChild(x);
+        //var image = document.getElementById('img');
+        //image.src = "data:image/jpeg;base64, " + imageData;
+      }
       //Error CallBack
       function FailCallback(message) {
         alert('Error!!!: ' + message);
       }
-    }
   </script>
 </head>
 
@@ -86,7 +130,7 @@
   <div class="toolbar toolbar--material">
     <div class="toolbar__left toolbar--material__left">
       <span class="toolbar-button toolbar-button--material">
-        <i class="zmdi zmdi-favorite"></i>
+        <i onclick="gallery()" class="zmdi zmdi-favorite"></i>
       </span>
     </div>
     <div style="text-align: center;" class="toolbar__center toolbar--material__center">
@@ -95,7 +139,7 @@
     <div class="toolbar__right toolbar--material__right">
 
       <span class="toolbar-button toolbar-button--material">
-        <i class="zmdi zmdi-favorite"></i>
+        <i onclick="galleryV()" class="zmdi zmdi-favorite"></i>
       </span>
 
     </div>
