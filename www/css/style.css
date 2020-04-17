@@ -1,5 +1,17 @@
 /**/
-
-.background{
-    background-color:deepskyblue;
-}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+   
+  }
+  .theseparatorxd{
+      width: 80%;
+      height: 2px;
+      background-color: deepskyblue;
+      margin: auto;
+      width: 50%;
+      margin-top: 2px;
+      margin-bottom: 10px;
+  }
