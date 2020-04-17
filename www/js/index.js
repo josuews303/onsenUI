@@ -1,7 +1,10 @@
 ons.ready(function () {
     console.log("Onsen UI is ready!");
   });
-
+  document.addEventListener('prechange', function(event) {
+    document.querySelector('ons-toolbar .center')
+      .innerHTML = event.tabItem.getAttribute('label');
+  });
   if (ons.platform.isIPhoneX()) {
     document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
     document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
