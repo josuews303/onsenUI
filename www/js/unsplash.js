@@ -16,18 +16,18 @@ async function searchPhoto(query) {
 
     for (var each in imagesList) {
         var x = document.createElement("LABEL");
-        if(imagesList[each].description!=null){
+        if (imagesList[each].description != null) {
             var t = document.createTextNode(imagesList[each].description);
-        }else{
-            if(imagesList[each].alt_description!=null){
+        } else {
+            if (imagesList[each].alt_description != null) {
                 var t = document.createTextNode(imagesList[each].alt_description);
-            }else{
+            } else {
                 var t = document.createTextNode('No Description');
             }
-            
+
         }
-       
-        x.setAttribute("class","text");
+
+        x.setAttribute("class", "text");
         x.appendChild(t);
 
         a.appendChild(x);
@@ -42,16 +42,16 @@ async function searchPhoto(query) {
         a.appendChild(z);
 
         var x = document.createElement("LABEL");
-        var t = document.createTextNode("Photo taked by: "+imagesList[each].user.name);
+        var t = document.createTextNode("Photo taked by: " + imagesList[each].user.name);
         x.appendChild(t);
 
         a.appendChild(x);
 
         var separator = document.createElement("div");
-        separator.setAttribute("class","theseparatorxd");
+        separator.setAttribute("class", "theseparatorxd");
         a.appendChild(separator);
 
 
-        
+
     }
 }

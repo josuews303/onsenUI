@@ -1,0 +1,47 @@
+<ons-page>
+
+    <div style="text-align: center;height: 100%;">
+        <ons-list-header style="font-size: large;margin-bottom: 10px;">My Notes</ons-list-header>
+        <div class="center1">
+            <div style="width: 80%;">
+                <ons-button modifier="large" onclick="showCreateDialog()">New Note</ons-button>
+            </div>
+        </div>
+        <div id="notes" style="text-align: center;width: 100%;">
+        </div>
+    </div>
+    <template id="dialog.html">
+        <ons-dialog id="my-dialog">
+            <div style="text-align: center; padding: 10px;">
+                <p>
+                    Edit Text
+                </p>
+                <p id="editText">
+                    This is a simple dialog!
+                </p>
+                <p>
+                    <ons-button onclick="editD('my-dialog')">SAVE</ons-button>
+                    <ons-button onclick="hideDialog('my-dialog')" style="background-color: orangered;">CANCEL
+                    </ons-button>
+                </p>
+            </div>
+        </ons-dialog>
+    </template>
+    <template id="dialogC.html">
+        <ons-dialog id="my-dialogC">
+            <div style="text-align: center; padding: 10px;">
+                <p>
+                    New Note
+                </p>
+                <p id="editTextC">
+                    This is a simple dialog!
+                </p>
+                <p>
+                    <ons-button onclick="createD()">SAVE</ons-button>
+                    <ons-button onclick="hideDialogC('my-dialog')" style="background-color: orangered;">CANCEL
+                    </ons-button>
+                </p>
+            </div>
+        </ons-dialog>
+    </template>
+</ons-page>
