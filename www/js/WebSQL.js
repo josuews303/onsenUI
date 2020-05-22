@@ -64,7 +64,6 @@ function displayNotes(db) {
                 wea.appendChild(x);
             }
             console.log('Done!!!');
-            UpdateNote(db);
         }, function (sqlTransaction, sqlError) {
             switch (sqlError.code) {
                 case sqlError.SYNTAX_ERR:
@@ -82,7 +81,6 @@ function UpdateNote(db, id, desc) {
         tx.executeSql('update notes set data=? where id=?', [desc, id], function (transaction, result) {
             console.log(result);
             console.info('Record Updated Successfully!');
-            deleteNote(db);
         }, function (transaction, error) {
             console.log(error);
         });
@@ -121,17 +119,8 @@ function deleteN(id) {
 }
 var db = createDb();
 
-// db.transaction(function (tx) {
-//     tx.executeSql('drop table notes', [], function (transaction, result) {
-//         console.log(result);
-//         console.log('Table dropped Successfully!');
-//     }, function (transaction, error) {
-//         console.log(error);
-//     });
-// }, transError, transSuccess);
-
 createTable(db);
-//create('wea2');
+
 displayNotes(db);
 
 var sendID = '';
