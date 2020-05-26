@@ -1,5 +1,5 @@
 async function searchPhoto(query) {
-    var accesKey = '9b5Caw71smFDUvbxMOZKIXkLcWaGMFnAnz7TxTki9Fw';
+    var accesKey = 'YOUR_API_HERE';
     var requestOptions = {
         method: 'GET',
         redirect: 'follow'
