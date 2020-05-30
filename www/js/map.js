@@ -13,8 +13,6 @@ function initMap() {
     var onChangeHandler = function () {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     };
-    //document.getElementById('start').addEventListener('change', onChangeHandler);
-    //document.getElementById('end').addEventListener('change', onChangeHandler);
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
     var myLatlng = { lat: parseFloat(lat.toString()), lng: parseFloat(lon) };
     // Create the initial InfoWindow.
